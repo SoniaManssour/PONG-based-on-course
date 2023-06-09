@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p>Player 1 controls paddle using Q (up) and A (down), player 2 using P (up) and L (down), start/pause with B</p>
+<canvas id="myCanvas" width="800" height="500" style="border:1px solid"/>
+<script src = "ball.js"></script>
+<script src = "paddle.js"></script>
+<script src = "player.js"></script>
+<script src = "game.js"></script>
+<script>
+    
+  const canvas = document.getElementById("myCanvas");
+  const ctx = canvas.getContext("2d");
+
+  // Constants
+  const CANVAS_HEIGHT = canvas.height;
+  const CANVAS_WIDTH = canvas.width;
+
+  const BOARD_Y = 50;
+  const BOARD_P1_X = 300;
+  const BOARD_P2_X = 500;
+
+  const PADDLE_WIDTH = 20;
+  const PADDLE_HEIGHT = 100;
+  const PADDLE_P1_X = 10;
+  const PADDLE_P2_X = 770;
+  const PADDLE_START_Y = (CANVAS_HEIGHT - PADDLE_HEIGHT) / 2;
+  const PADDLE_STEP = 3;
+
+  const BALL_R = 15;
+  const BALL_START_X = CANVAS_WIDTH / 2;
+  const BALL_START_Y = CANVAS_HEIGHT / 2;
+  const BALL_START_DX = 4.5;
+  const BALL_START_DY = 1.5;
+
+  const STATE_CHANGE_INTERVAL = 20;
+
+  const UP_ACTION = "up";
+  const DOWN_ACTION = "down";
+  const STOP_ACTION = "stop";
+
+  const P1_UP_BUTTON = "KeyQ";
+  const P1_DOWN_BUTTON = "KeyA";
+  const P2_UP_BUTTON = "KeyP";
+  const P2_DOWN_BUTTON = "KeyL";
+  const PAUSE_BUTTON = "KeyB";
+
+  // Utils
+  function coerceIn(value, min, max) {
+    if (value <= min) {
+      return min;
+    } else if (value >= max) {
+      return max;
+    } else {
+      return value;
+    }
+  }
+
+  function isInBetween(value, min, max) {
+    return value >= min && value <= max;
+  }
+
+  // Drawing functions
+  ctx.font = "30px Arial";
+
+  function drawPoints(text, x) {
+    ctx.fillText(text, x, BOARD_Y);
+  }
+
+  function drawCircle(x, y, r) {
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function clearCanvas() {
+    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  }
+
+  const game = new Game();
+  game.start();
+</script>
+</body>
+</html>
